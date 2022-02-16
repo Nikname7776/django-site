@@ -1,6 +1,7 @@
 from .models import Category, Cart, CartItem
 from .views import _cart_id
 
+
 def counter(request):
 	item_count = 0
 	if 'admin' in request.path:
@@ -14,6 +15,7 @@ def counter(request):
 		except Cart.DoesNotExist:
 			item_count = 0
 	return dict(item_count=item_count)
+
 
 def menu_links(request):
 	links = Category.objects.all()
