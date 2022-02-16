@@ -5,7 +5,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('shop', '0002_alter_category_options_alter_product_options'),
     ]
