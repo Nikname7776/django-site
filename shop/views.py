@@ -1,18 +1,18 @@
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Category, Product, Cart, CartItem
-from django.core.exceptions import ObjectDoesNotExist
-from django.contrib.auth.models import Group, User
-from .forms import SignUpForm
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import Group, User
+from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import render, get_object_or_404, redirect
+
+from .forms import SignUpForm
+from .models import Category, Product, Cart, CartItem
 
 
 # Create your views here.
 
 def home(request, category_slug=None):
     category_page = None
-    products = None
-    if category_slug != None:
+    if category_slug is not None:
         category_page = get_object_or_404(Category, slug=category_slug)
         products = Product.objects.filter(category=category_page, available=True)
     else:
@@ -23,7 +23,7 @@ def home(request, category_slug=None):
 def product(request, category_slug, product_slug):
     try:
         product = Product.objects.get(category__slug=category_slug, slug=product_slug)
-    except Exeption as e:
+    except Exception as e:
         raise e
     return render(request, 'product.html', {'product': product})
 
@@ -67,8 +67,8 @@ def cart_detail(request, total=0, counter=0, cart_items=None):
 
 def cart_remove(request, product_id):
     cart = Cart.objects.get(cart_id=_cart_id(request))
-    product = get_object_or_404(Product, id=product_id)
-    cart_item = CartItem.objects.get(product=product, cart=cart)
+    product1 = get_object_or_404(Product, id=product_id)
+    cart_item = CartItem.objects.get(product=product1, cart=cart)
     if cart_item.quantity > 1:
         cart_item.quantity -= 1
         cart_item.save()
@@ -79,8 +79,8 @@ def cart_remove(request, product_id):
 
 def cart_remove_product(request, product_id):
     cart = Cart.objects.get(cart_id=_cart_id(request))
-    product = get_object_or_404(Product, id=product_id)
-    cart_item = CartItem.objects.get(product=product, cart=cart)
+    product1 = get_object_or_404(Product, id=product_id)
+    cart_item = CartItem.objects.get(product=product1, cart=cart)
     cart_item.delete()
     return redirect('cart_detail')
 
